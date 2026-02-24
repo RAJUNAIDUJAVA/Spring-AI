@@ -1,6 +1,7 @@
 package com.td.AI.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.SafeGuardAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -10,13 +11,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class AdvisorController {
 
 
     ChatClient chatClient;
     public AdvisorController(ChatClient.Builder builder){
-       this.chatClient= builder.defaultAdvisors(new SimpleLoggerAdvisor()).build();
+       this.chatClient= builder.defaultAdvisors(new SimpleLoggerAdvisor(), new SafeGuardAdvisor(List.of("games","movies","action"))).build();
     }
 
     @GetMapping("log/{message}")
