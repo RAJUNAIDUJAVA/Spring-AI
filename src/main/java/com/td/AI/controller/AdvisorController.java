@@ -1,8 +1,10 @@
 package com.td.AI.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SafeGuardAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.ollama.api.OllamaChatOptions;
@@ -18,8 +20,10 @@ public class AdvisorController {
 
 
     ChatClient chatClient;
-    public AdvisorController(ChatClient.Builder builder){
-       this.chatClient= builder.defaultAdvisors(new SimpleLoggerAdvisor(), new SafeGuardAdvisor(List.of("games","movies","action"))).build();
+    public AdvisorController(ChatClient.Builder builder, ChatMemory chatMemory){
+
+        MessageChatMemoryAdvisor messageChatMemoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory).build();
+       this.chatClient= builder.defaultAdvisors(new SimpleLoggerAdvisor(), new SafeGuardAdvisor(List.of("games","movies","action")),messageChatMemoryAdvisor).build();
     }
 
     @GetMapping("log/{message}")
@@ -28,4 +32,6 @@ public class AdvisorController {
         ChatOptions chatOptions = ChatOptions.builder().maxTokens(200).build();
         return chatClient.prompt(new Prompt(message,chatOptions)).call().content();
     }
+
+
 }
