@@ -1,6 +1,7 @@
 package com.td.AI.config;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.ollama.api.OllamaChatOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
@@ -21,6 +22,10 @@ public class TempConfig {
     public ChatClient chatClient(ChatClient.Builder builder){
         return builder.build();
     }
+
+    /*public OllamaChatOptions chatOptions(OllamaChatOptions.Builder builder){
+        return builder.wit
+    }*/
 
 
 }

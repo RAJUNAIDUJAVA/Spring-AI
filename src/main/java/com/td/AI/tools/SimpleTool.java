@@ -12,4 +12,8 @@ public class SimpleTool {
     public String getCurrentDate(){
         return LocalDateTime.now().atZone(LocaleContextHolder.getTimeZone().toZoneId()).toString();
     }
+    @Tool
+    public String getAge(){
+        return "My age is 45";
+    }
 }

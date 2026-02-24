@@ -32,6 +32,8 @@ public class TempController {
 
     @GetMapping ("get2/{message}")
     public String getoutput(@PathVariable String message){
-    return client.prompt().tools(weatherTool).user(message).call().content();
+    return client.prompt().tools(weatherTool,new SimpleTool()).user(message).call().content();
     }
+
+
 }
