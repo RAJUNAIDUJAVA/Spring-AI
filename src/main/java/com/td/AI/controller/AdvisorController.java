@@ -12,10 +12,12 @@ import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.ollama.api.OllamaChatOptions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 
@@ -44,6 +46,16 @@ public class AdvisorController {
     public String home(@PathVariable String conversationId, @RequestParam String message){
         return chatClient.prompt().advisors(advisor-> advisor.param("conversationId", conversationId))
                 .user(message).call().content();
+    }
+
+    @GetMapping("con/{userid}")
+    public ResponseEntity<Flux<String>> getbyConversationId(@RequestParam String message, @PathVariable String userid){
+        Flux<String> result =chatClient.prompt().advisors(advisorSpec -> advisorSpec.param(ChatMemory.CONVERSATION_ID ,userid))
+                .user(message)
+                .stream().content();
+
+        return ResponseEntity.ok(result);
+
     }
 
 
