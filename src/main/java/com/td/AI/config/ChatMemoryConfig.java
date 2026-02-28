@@ -1,4 +1,4 @@
-package com.td.AI.config;
+/*package com.td.AI.config;
 
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.MessageWindowChatMemory;
@@ -15,4 +15,4 @@ public class ChatMemoryConfig {
 
     }
 
-}
+}*/

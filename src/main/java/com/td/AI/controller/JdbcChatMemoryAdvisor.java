@@ -1,3 +1,4 @@
+/*
 package com.td.AI.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
@@ -26,3 +27,4 @@ public class JdbcChatMemoryAdvisor {
         return chatClient.prompt(message).call().content();
     }
 }
+*/
